@@ -14,5 +14,26 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error,client) => 
         surname: 'çepni',
         age: 24,
         hometown: 'trabzon'
-    })
+    });
+
+    db.collection("users").insertMany(
+      [{
+        name: "murti",
+        surname: "çepni",
+        age: 24,
+        hometown: "giresun",
+      },
+      {
+        name: "shokimurti",
+        surname: "çepni",
+        age: 24,
+        hometown: "trabzon",
+        }],
+        (error,result) => {
+            if (error) {
+              return console.log('unable to insert the document')
+            };
+            console.log(result.ops)
+      }
+    );
 });
