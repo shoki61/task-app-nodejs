@@ -9,31 +9,20 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error,client) => 
         return console.log('unable to connect to the database');
     };
     const db = client.db(databaseName);
-    db.collection('users').insertOne({
-        name: 'shoki',
-        surname: 'çepni',
-        age: 24,
-        hometown: 'trabzon'
-    });
-
-    db.collection("users").insertMany(
-      [{
-        name: "murti",
-        surname: "çepni",
-        age: 24,
-        hometown: "giresun",
-      },
-      {
-        name: "shokimurti",
-        surname: "çepni",
-        age: 24,
-        hometown: "trabzon",
-        }],
-        (error,result) => {
+     
+    db.collection('tasks').insertMany([
+        {
+            description: 'start mongodb',
+            completed: true
+        },
+        {
+            description: 'send multiple collections',
+            completed: true
+        }
+    ], (error, result) => {
             if (error) {
-              return console.log('unable to insert the document')
-            };
-            console.log(result.ops)
-      }
-    );
+                return console.log('unable to insert collections to the database')
+            }
+            console.log('inserted successfully')            
+    })
 });
