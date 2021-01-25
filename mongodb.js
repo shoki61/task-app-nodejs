@@ -12,20 +12,15 @@ MongoClient.connect(
     }
     const db = client.db(databaseName);
 
-    db.collection("tasks").findOne(
-      { _id: ObjectID("600dd80479d31c19844c9090") },
-      (error, task) => {
-        if (error) {
-          return console.log(error);
-        }
-        console.log(task);
-      }
-    );
-
     db.collection("tasks")
-      .find({ completed: false })
-      .toArray((error, tasks) => {
-        console.log(tasks);
+      .deleteOne({
+        completed: true,
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 );
