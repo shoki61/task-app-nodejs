@@ -1,28 +1,31 @@
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
+const { MongoClient, ObjectID } = require("mongodb");
 
-const connectionURL = 'mongodb://127.0.0.1:27017';
-const databaseName = 'task-manager';
+const connectionURL = "mongodb://127.0.0.1:27017";
+const databaseName = "task-manager";
 
-MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error,client) => {
+MongoClient.connect(
+  connectionURL,
+  { useNewUrlParser: true },
+  (error, client) => {
     if (error) {
-        return console.log('unable to connect to the database');
-    };
+      return console.log("unable to connect to the database");
+    }
     const db = client.db(databaseName);
-     
-    db.collection('tasks').insertMany([
-        {
-            description: 'start mongodb',
-            completed: true
-        },
-        {
-            description: 'send multiple collections',
-            completed: true
+
+    db.collection("tasks").findOne(
+      { _id: ObjectID("600dd80479d31c19844c9090") },
+      (error, task) => {
+        if (error) {
+          return console.log(error);
         }
-    ], (error, result) => {
-            if (error) {
-                return console.log('unable to insert collections to the database')
-            }
-            console.log('inserted successfully')            
-    })
-});
+        console.log(task);
+      }
+    );
+
+    db.collection("tasks")
+      .find({ completed: false })
+      .toArray((error, tasks) => {
+        console.log(tasks);
+      });
+  }
+);
