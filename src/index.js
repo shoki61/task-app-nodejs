@@ -55,7 +55,17 @@ app.get("/users/:id", (req, res) => {
       res.send(user);
     })
     .catch((error) => {
-      res.status(500).send();
+      res.status(500).send(error);
+    });
+});
+
+app.get("/tasks", (req, res) => {
+  Task.find({})
+    .then((tasks) => {
+      res.send(tasks);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
     });
 });
 
