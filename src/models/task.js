@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-const Task = mongoose.model("task", {
+const taskSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
@@ -11,5 +12,16 @@ const Task = mongoose.model("task", {
     default: false,
   },
 });
+
+taskSchema.pre("save", async function (next) {
+  const task = this;
+  if (task.isModified("description")) {
+    task.description = await bcrypt.hash(task.description, 8);
+  }
+
+  next();
+});
+
+const Task = mongoose.model("task", taskSchema);
 
 module.exports = Task;
