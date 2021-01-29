@@ -1,11 +1,15 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
 
+const auth = require('../middleware/auth');
 const Task = require("../models/task");
 const router = new express.Router();
 
-router.post("/task", async (req, res) => {
-  const task = new Task(req.body);
+
+router.post("/task",auth, async (req, res) => {
+  const task = new Task({
+    ...req.body,
+    owner: req.user._id
+  });
 
   try {
     await task.save();
@@ -40,7 +44,7 @@ router.patch("/tasks/:id", async (req, res) => {
     res.send(task);
   } catch (error) {
     res.status(400).send(error);
-  }
+  };
 });
 
 router.get("/tasks", async (req, res) => {
