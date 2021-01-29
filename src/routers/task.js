@@ -50,16 +50,14 @@ router.get('/tasks', auth, async (req, res) => {
   const sort = {};
 
   if (req.query.completed) {
-      match.completed = req.query.completed === 'true'
+      match.completed = req.query.completed === 'true';
   };
 
   if(req.query.sortBy){
     const parts = req.query.sortBy.split(':');
-    console.log(parts);
-    console.log(req.query.sortBy)
-    sort[parts[0]] = parts[1] === 'desc' ? 1 : -1
-    console.log(sort)
-  }
+    console.log(req.query.sortBy);
+    sort[parts[0]] = parts[1] === 'desc' ? 1 : -1;
+  };
 
   try {
       await req.user.populate({
@@ -89,7 +87,7 @@ router.get("/tasks/:id",auth, async (req, res) => {
     res.send(task);
   } catch (error) {
     res.status(500).send(error);
-  }
+  };
 });
 
 router.delete("/tasks/:id", auth, async (req, res) => {
