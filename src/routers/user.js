@@ -132,6 +132,8 @@ router.post('/users/profile/avatar',upload.single('avatar'), async (req, res)=>{
   }catch(error){
     res.status(500).send(error);
   }
+},(error, req, res, next) => {
+  res.status(400).send({ error: error.message});
 });
 
 module.exports = router;
