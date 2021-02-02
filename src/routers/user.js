@@ -106,7 +106,6 @@ router.get("/users/:id", async (req, res) => {
 });
 
 router.delete("/users/profile",auth, async (req, res) => {
-  console.log('dddd')
   try {
     await req.user.remove();
     sendCancelationEmail(req.user.email, req.user.name);
